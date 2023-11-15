@@ -1,5 +1,5 @@
 // keep score
-let playerWins = 0, computerWins = 0;
+let player = 0, computer = 0, victory = 5;
 
 // create key-value pairs ("winner","loser")
 const outcomes = new Map();
@@ -16,59 +16,62 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === "Scissors" && computerSelection === outcomes.get("Scissors")) {
-        console.log("You win! Scissors beats Paper");
-        playerWins++;
+        player++;
+        display("You win! Scissors beats Paper");
     }
     else if (playerSelection === "Paper" && computerSelection === outcomes.get("Paper")) {
-        console.log("You win! Paper beats Rock");
-        playerWins++;
+        player++;
+        display("You win! Paper beats Rock");
     }
     else if (playerSelection === "Rock" && computerSelection === outcomes.get("Rock")) {
-        console.log("You win! Rock beats Scissors");
-        playerWins++;
+        player++;
+        display("You win! Rock beats Scissors");
     }
     else if (computerSelection === "Scissors" && playerSelection === outcomes.get("Scissors")) {
-        console.log("You lose! Scissors beats Paper");
-        computerWins++;
+        computer++;
+        display("You lose! Scissors beats Paper");
     }
     else if (computerSelection === "Paper" && playerSelection === outcomes.get("Paper")) {
-        console.log("You lose! Paper beats Rock");
-        computerWins++;
+        computer++;
+        display("You lose! Paper beats Rock");
     }
     else if (computerSelection === "Rock" && playerSelection === outcomes.get("Rock")) {
-        console.log("You lose! Rock beats Scissors");
-        computerWins++;
+        computer++;
+        display("You lose! Rock beats Scissors");
     }
     else {
-        console.log("Draw!");
+        display("Draw!");
     }
 }
 
-function game() {
+function display(message) {
+    const results = document.querySelector(".results");
+    results.textContent = `${message}`;
 
+    const score = document.querySelector(".score");
+    score.textContent = `SCORE: ${player}-${computer}`;
+}
+
+function game() {
     const btns = document.querySelectorAll("button");
+    const controller = new AbortController();
 
     for (const btn of btns) {
-        btn.addEventListener("click", () => {
+            btn.addEventListener("click", () => {
             playerSelection = btn.textContent;
-            console.log(playerSelection);
             const computerSelection = getComputerChoice();
-            console.log(computerSelection);
+
             playRound(playerSelection, computerSelection);
-        })
+
+            if (player === victory || computer === victory) {
+                // remove event listener to end the game
+                controller.abort();
+
+                const endResults = document.querySelector(".results");
+                endResults.textContent = (player > computer) ? "YOU WIN!" : "COMPUTER WINS!";
+            }
+        }, { signal: controller.signal })
     }
-
-    // let results = `SCORE: ${playerWins}-${computerWins}`;
-
-    // if (playerWins > computerWins) {
-    //     console.log(results+"\nYOU WIN!");
-    // }
-    // else if (playerWins < computerWins) {
-    //     console.log(results+"\nCOMPUTER WINS!");
-    // }
-    // else {
-    //     console.log(results+"\nDRAW");
-    // }
 }
 
 game();
