@@ -69,6 +69,11 @@ function game() {
 
                 const endResults = document.querySelector(".results");
                 endResults.textContent = (player > computer) ? "YOU WIN!" : "COMPUTER WINS!";
+
+                const div = document.querySelector("div");
+                div.style.display = "none";
+                const playAgain = document.querySelector("a");
+                playAgain.style.display = "block";
             }
         }, { signal: controller.signal })
     }

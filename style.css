@@ -17,16 +17,22 @@ body {
     gap: 1rem;
 }
 
-button {
+button, a {
     background-color: yellow;
     cursor: pointer;
     padding: .5rem 1.5rem;
     border-style: none;
 }
 
-button:hover {
+button:hover, a:hover {
     color: yellow;
     background-color: black;
+}
+
+a {
+    display: none;
+    text-decoration: none;
+    color: black;
 }
 
 @media only screen and (max-width: 768px) {
