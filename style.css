@@ -28,3 +28,17 @@ button:hover {
     color: yellow;
     background-color: black;
 }
+
+@media only screen and (max-width: 768px) {
+    body {
+        margin: 0 1rem;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .results {
+        text-align: center;
+    }
+}
